@@ -11,7 +11,7 @@
     "build-browser-production": "webpack --mode production --config webpack.browser.config",
     "build-browser": "webpack --mode development --config webpack.browser.config",
     "watch-browser": "webpack --mode development --config webpack.browser.config --watch",
-    "lint": "eslint -c ../../../.eslintrc --no-error-on-unmatched-pattern src"
+    "lint": "eslint -c ../../.eslintrc --no-error-on-unmatched-pattern src"
   },
   "devDependencies": {
     "vscode-languageserver": "^7.0.0",

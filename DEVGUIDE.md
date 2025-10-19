@@ -7,6 +7,6 @@ brew install zx
 
 ```sh
 ./rebuild.sh
-cd app/vscode-refactor
+cd packages/app-vscode-extension
 yarn build-clean-production
 ```

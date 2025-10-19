@@ -2,16 +2,15 @@
   "name": "p42",
   "private": true,
   "workspaces": [
-    "app/vscode-refactor",
-    "app/vscode-refactor/extension",
-    "app/vscode-refactor/hide-typescript-refactors",
-    "app/vscode-refactor/server",
-    "app/vscode-refactor/shared",
-    "app/vscode-refactor/webview",
-    "augmentation/*",
-    "bundle",
-    "code-assist/*",
-    "engine"
+    "packages/app-vscode-extension",
+    "packages/app-vscode-server",
+    "packages/app-vscode-shared",
+    "packages/app-vscode-webview",
+    "packages/hide-typescript-refactors",
+    "packages/augmentation/*",
+    "packages/bundle",
+    "packages/code-assist/*",
+    "packages/engine"
   ],
   "devDependencies": {
     "@types/jest": "27.4.1",

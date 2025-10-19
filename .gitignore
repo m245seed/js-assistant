@@ -31,16 +31,16 @@ tsconfig.tsbuildinfo
 
 app/web/next.config.js
 
-bundle/package.json
+packages/bundle/package.json
 
-augmentation/*/jest.config.js
-augmentation/*/package.json
-augmentation/*/tsconfig.json
-augmentation/*/test/*.spec.test.ts
+packages/augmentation/*/jest.config.js
+packages/augmentation/*/package.json
+packages/augmentation/*/tsconfig.json
+packages/augmentation/*/test/*.spec.test.ts
 
-code-assist/*/jest.config.js
-code-assist/*/package.json
-code-assist/*/tsconfig.json
-code-assist/*/test/*.spec.test.ts
+packages/code-assist/*/jest.config.js
+packages/code-assist/*/package.json
+packages/code-assist/*/tsconfig.json
+packages/code-assist/*/test/*.spec.test.ts
 
 lib-kotlin/scan-runner/script/export-code-assists.sh

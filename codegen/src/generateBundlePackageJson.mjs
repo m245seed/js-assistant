@@ -16,7 +16,7 @@ export function generateBundlePackageJson(
     "clean": "rimraf build node_modules tsconfig.tsbuildinfo",
     "build": "tsc --build",
     "build-dev": "mkdir -p build && tsc --build --watch",
-    "lint": "eslint -c ../.eslintrc --no-error-on-unmatched-pattern src",
+    "lint": "eslint -c ../../.eslintrc --no-error-on-unmatched-pattern src",
     "format": "prettier -w \\"**/*.{ts,tsx}\\"",
     "test": "jest --passWithNoTests"
   },

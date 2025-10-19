@@ -15,6 +15,20 @@ The P42 JS Assistant adds **over 120 code actions** and a **suggestion panel** f
   </p>
 </div>
 
+## Repository structure
+
+The project is organised as a Yarn workspaces monorepo under the `packages/` directory:
+
+* `packages/app-vscode-extension` – the VS Code client extension package, including packaging assets and documentation templates.
+* `packages/app-vscode-server` – the language server powering refactoring analysis.
+* `packages/app-vscode-webview` – the React-based webview UI for the extension.
+* `packages/app-vscode-shared` – shared utilities used by the extension, server, and webview.
+* `packages/hide-typescript-refactors` – optional helper to hide competing TypeScript refactorings.
+* `packages/engine` – the transformation engine that drives augmentations and code assists.
+* `packages/bundle` – bundles the locally maintained augmentations and code assists.
+* `packages/augmentation/*` – individual augmentation packages that enrich syntax trees.
+* `packages/code-assist/*` – individual code assist implementations exposed by the extension.
+
 # Documentation
 
 You can find the actions in the **quick fix** and **refactoring context menus**. They depend on the cursor position, the selected text (if any), the source code, the language type, and any available type information.

@@ -4,7 +4,7 @@ export function generateTsconfigJson(filename, codeActionIds) {
   function generateCodeAssistEntries() {
     let content = "";
     for (const codeAssistId of codeActionIds) {
-      content += `      "@p42/code-assist-${codeAssistId}": ["code-assist/${codeAssistId}/src/*"],
+      content += `      "@p42/code-assist-${codeAssistId}": ["packages/code-assist/${codeAssistId}/src/*"],
 `;
     }
     return content;
@@ -21,12 +21,9 @@ export function generateTsconfigJson(filename, codeActionIds) {
     "paths": {
 
 ${generateCodeAssistEntries()}
-      "@p42/app-vscode-shared": ["app/vscode-refactor/shared/src/*"],
-      "@p42/app-web": ["app/web/src/*", "app/web/test/*"],
-      "@p42/ml": ["ml/src/*"],
-      "@p42/bundle": ["bundle/src/*"],
-      "@p42/engine": ["engine/src/*"],
-      "@p42/service-graphql-engine": ["service/graphql-engine/*"]
+      "@p42/app-vscode-shared": ["packages/app-vscode-shared/src/*"],
+      "@p42/bundle": ["packages/bundle/src/*"],
+      "@p42/engine": ["packages/engine/src/*"]
     }
   }
 }

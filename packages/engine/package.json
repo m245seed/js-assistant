@@ -8,7 +8,7 @@
     "generate": "ts-node codegen/generate.ts",
     "build": "tsc --build",
     "build-dev": "mkdir -p build && tsc --build --watch",
-    "lint": "eslint -c ../.eslintrc --no-error-on-unmatched-pattern src",
+    "lint": "eslint -c ../../.eslintrc --no-error-on-unmatched-pattern src",
     "format": "prettier -w \"**/*.{ts,tsx}\"",
     "test": "jest"
   },

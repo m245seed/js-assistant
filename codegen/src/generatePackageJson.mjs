@@ -12,7 +12,7 @@ export function generatePackageJson(filename, name, dependencies) {
     "clean": "rimraf build node_modules tsconfig.tsbuildinfo",
     "build": "tsc --build",
     "watch": "tsc --watch",
-    "lint": "eslint -c ../../.eslintrc --no-error-on-unmatched-pattern src",
+    "lint": "eslint -c ../../../.eslintrc --no-error-on-unmatched-pattern src",
     "format": "prettier -w \\"**/*.{ts,tsx}\\"",
     "test": "jest"
   },

@@ -4,10 +4,10 @@
 
 import fs from "node:fs";
 
-// TODO move into app/vscode-refactor as build step
-import { generateKeyboardShortcutsMd } from "../app/vscode-refactor/media/keyboard-shortcuts.md.template.mjs";
-import { generateVsCodePackageJson } from "../app/vscode-refactor/package.json.template.mjs";
-import { generateAppVscodeReadmeMd } from "../app/vscode-refactor/README.md.template.mjs";
+// TODO move into packages/app-vscode-extension as build step
+import { generateKeyboardShortcutsMd } from "../packages/app-vscode-extension/media/keyboard-shortcuts.md.template.mjs";
+import { generateVsCodePackageJson } from "../packages/app-vscode-extension/package.json.template.mjs";
+import { generateAppVscodeReadmeMd } from "../packages/app-vscode-extension/README.md.template.mjs";
 
 import { generateBundleCodeAssists } from "./src/generateBundleCodeAssists.mjs";
 import { generateBundlePackageJson } from "./src/generateBundlePackageJson.mjs";
@@ -18,9 +18,9 @@ import { getCodeAssistMetadata } from "./src/getCodeAssistMetadata.mjs";
 import { getSubdirectoryNames } from "./src/getSubdirectoryNames.mjs";
 
 // assumption: script is run from root dir of project
-const augmentations = getSubdirectoryNames("augmentation").map(
+const augmentations = getSubdirectoryNames("packages/augmentation").map(
   (augmentationId) => {
-    const augmentationFolder = `augmentation/${augmentationId}`;
+    const augmentationFolder = `packages/augmentation/${augmentationId}`;
 
     const configurationFile = `${augmentationFolder}/codegen.json`;
     const configuration = fs.existsSync(configurationFile)
@@ -35,8 +35,11 @@ const augmentations = getSubdirectoryNames("augmentation").map(
   }
 );
 
-const codeAssistIds = getSubdirectoryNames("code-assist");
-const codeAssistMetadata = getCodeAssistMetadata("code-assist", codeAssistIds);
+const codeAssistIds = getSubdirectoryNames("packages/code-assist");
+const codeAssistMetadata = getCodeAssistMetadata(
+  "packages/code-assist",
+  codeAssistIds
+);
 const codeAssistCategories = JSON.parse(
   fs.readFileSync("metadata/code-assist-categories.json", "utf8")
 );
@@ -129,7 +132,7 @@ for (const augmentation of augmentations) {
 for (const codeAssistId of codeAssistIds) {
   console.log(`Generating boilerplate for code assist ${codeAssistId}`);
 
-  const codeAssistFolder = `code-assist/${codeAssistId}`;
+  const codeAssistFolder = `packages/code-assist/${codeAssistId}`;
 
   // create directories if needed
   await $`mkdir -p "${codeAssistFolder}/src"`;
@@ -159,25 +162,28 @@ for (const codeAssistId of codeAssistIds) {
 // generate files that contain references to all refactorings
 console.log(`Generating project files`);
 generateTsconfigJson("tsconfig.json", codeAssistIds);
-generateBundleCodeAssists("bundle/src/codeAssists.generated.ts", codeAssistIds);
+generateBundleCodeAssists(
+  "packages/bundle/src/codeAssists.generated.ts",
+  codeAssistIds
+);
 generateBundlePackageJson(
-  "bundle/package.json",
+  "packages/bundle/package.json",
   augmentations.map((augmentation) => augmentation.id),
   codeAssistIds
 );
 
 generateVsCodePackageJson({
-  path: "app/vscode-refactor/package.json",
+  path: "packages/app-vscode-extension/package.json",
   codeAssists: codeAssistMetadata,
   keyboardShortcuts,
 });
 generateAppVscodeReadmeMd({
-  path: "app/vscode-refactor/README.md",
+  path: "packages/app-vscode-extension/README.md",
   codeAssists: codeAssistMetadata,
   codeAssistCategories,
   generateKeyboardShortcutTableRow,
 });
 generateKeyboardShortcutsMd({
-  path: "app/vscode-refactor/media/keyboard-shortcuts.md",
+  path: "packages/app-vscode-extension/media/keyboard-shortcuts.md",
   generateKeyboardShortcutTableRow,
 });

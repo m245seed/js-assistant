@@ -14,7 +14,7 @@ const codeAssistId = process.argv[3];
 
 console.log(`Generating scaffolding for code assist '${codeAssistId}'`);
 
-const codeAssistFolder = `code-assist/${codeAssistId}`;
+const codeAssistFolder = `packages/code-assist/${codeAssistId}`;
 const codeAssistName = convertCodeAssistIdToName(codeAssistId);
 
 await $`mkdir -p "${codeAssistFolder}/src"`;

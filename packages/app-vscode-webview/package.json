@@ -7,7 +7,7 @@
     "build-production": "webpack --mode production --config webpack.config",
     "build": "webpack --mode development --config webpack.config",
     "watch": "webpack --mode development --config webpack.config --watch",
-    "lint": "eslint -c ../../../.eslintrc --no-error-on-unmatched-pattern src"
+    "lint": "eslint -c ../../.eslintrc --no-error-on-unmatched-pattern src"
   },
   "devDependencies": {
     "@types/vscode-webview": "^1.57.0",
