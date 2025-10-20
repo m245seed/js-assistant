@@ -83,97 +83,69 @@ export class LanguageServerFacade {
   async getSuggestions(
     documentUri: string
   ): Promise<Array<SerializedSuggestionCodeAssist> | undefined> {
-    try {
-      return this.client.client?.sendRequest(
-        new RequestType<
-          string,
-          Array<SerializedSuggestionCodeAssist> | undefined,
-          void
-        >("p42/get-suggestions"),
-        documentUri
-      );
-    } catch (error) {
-      this.logger.error({
-        message: "LanguageServer.getSuggestions failed",
-        error,
-      });
-      return undefined;
-    }
+    return this.sendRequest(
+      new RequestType<
+        string,
+        Array<SerializedSuggestionCodeAssist> | undefined,
+        void
+      >("p42/get-suggestions"),
+      documentUri,
+      "LanguageServer.getSuggestions failed"
+    );
   }
 
   async getFunctionElements(
     documentUri: string
   ): Promise<Array<p42.FunctionElement> | undefined> {
-    try {
-      return this.client.client?.sendRequest(
-        new RequestType<string, Array<p42.FunctionElement> | undefined, void>(
-          "p42/get-function-elements"
-        ),
-        documentUri
-      );
-    } catch (error) {
-      this.logger.error({
-        message: "LanguageServer.getFunctionElements failed",
-        error,
-      });
-      return undefined;
-    }
+    return this.sendRequest(
+      new RequestType<string, Array<p42.FunctionElement> | undefined, void>(
+        "p42/get-function-elements"
+      ),
+      documentUri,
+      "LanguageServer.getFunctionElements failed"
+    );
   }
 
   async getCodeAssists(
     documentUri: string,
     selection: vscode.Range
   ): Promise<Array<SerializedCodeAssist> | undefined> {
-    try {
-      return await this.client.client?.sendRequest(
-        new RequestType<
-          {
-            documentUri: string;
-            selection: vscode.Range;
-          },
-          Array<SerializedCodeAssist> | undefined,
-          void
-        >("p42/get-code-assists"),
+    return this.sendRequest(
+      new RequestType<
         {
-          documentUri,
-          selection,
-        }
-      );
-    } catch (error) {
-      this.logger.error({
-        message: "LanguageServer.getCodeAssists failed",
-        error,
-      });
-      return undefined;
-    }
+          documentUri: string;
+          selection: vscode.Range;
+        },
+        Array<SerializedCodeAssist> | undefined,
+        void
+      >("p42/get-code-assists"),
+      {
+        documentUri,
+        selection,
+      },
+      "LanguageServer.getCodeAssists failed"
+    );
   }
 
   async getCodeAssistAction(
     documentUri: string,
     codeAssistId: string
   ): Promise<p42.CodeAssistAction | undefined> {
-    try {
-      return this.client.client?.sendRequest(
-        new RequestType<
-          {
-            documentUri: string;
-            codeAssistId: string;
-          },
-          p42.CodeAssistAction | undefined,
-          void
-        >("p42/get-code-assist-action"),
+    return this.sendRequest(
+      new RequestType<
         {
-          documentUri,
-          codeAssistId,
-        }
-      );
-    } catch (error) {
-      this.logger.error({
-        message: "LanguageServer.getCodeAssistAction failed",
-        error,
-      });
-      return undefined;
-    }
+          documentUri: string;
+          codeAssistId: string;
+        },
+        p42.CodeAssistAction | undefined,
+        void
+      >("p42/get-code-assist-action"),
+      {
+        documentUri,
+        codeAssistId,
+      },
+      "LanguageServer.getCodeAssistAction failed"
+    );
   }
 
   async getCodeAssistDiff(
@@ -181,33 +153,42 @@ export class LanguageServerFacade {
     codeAssistId: string,
     contextLines?: number | undefined
   ): Promise<string | undefined> {
-    try {
-      return this.client.client?.sendRequest(
-        new RequestType<
-          {
-            documentUri: string;
-            codeAssistId: string;
-            contextLines?: number | undefined;
-          },
-          string | undefined,
-          void
-        >("p42/get-code-assist-diff"),
+    return this.sendRequest(
+      new RequestType<
         {
-          documentUri,
-          codeAssistId,
-          contextLines,
-        }
-      );
-    } catch (error) {
-      this.logger.error({
-        message: "LanguageServer.getCodeAssistDiff failed",
-        error,
-      });
-      return undefined;
-    }
+          documentUri: string;
+          codeAssistId: string;
+          contextLines?: number | undefined;
+        },
+        string | undefined,
+        void
+      >("p42/get-code-assist-diff"),
+      {
+        documentUri,
+        codeAssistId,
+        contextLines,
+      },
+      "LanguageServer.getCodeAssistDiff failed"
+    );
   }
 
   onDocumentUpdated(listener: DocumentUpdatedListener): Disposable {
     return this.documentUpdatedListeners.add(listener);
+  }
+
+  private async sendRequest<Params, Result>(
+    type: RequestType<Params, Result, void>,
+    params: Params,
+    errorMessage: string
+  ): Promise<Result | undefined> {
+    try {
+      return await this.client.client?.sendRequest(type, params);
+    } catch (error) {
+      this.logger.error({
+        message: errorMessage,
+        error,
+      });
+      return undefined;
+    }
   }
 }

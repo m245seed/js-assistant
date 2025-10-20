@@ -13,13 +13,10 @@ export class NodeLanguageServerClient implements LanguageServerClient {
 
   private disposable: Disposable | undefined;
 
-  private worker: Worker | undefined;
-
   constructor(private readonly context: vscode.ExtensionContext) {}
 
   dispose() {
     this.disposable?.dispose();
-    this.worker?.terminate();
   }
 
   async init(clientOptions: LanguageClientOptions) {
